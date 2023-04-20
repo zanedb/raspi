@@ -1,0 +1,22 @@
+version: '3'
+services:
+  homebridge:
+    image: oznu/homebridge:latest
+    restart: always
+    network_mode: host
+    volumes:
+      - /etc/homebridge:/homebridge
+    logging:
+      driver: json-file
+      options:
+        max-size: "10mb"
+        max-file: "1"
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /etc/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    privileged: true
+    network_mode: host
